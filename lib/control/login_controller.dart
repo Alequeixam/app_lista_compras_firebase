@@ -36,6 +36,7 @@ class LoginController {
     .then((resultado){
       sucesso(context, "Usuario autenticado com sucesso!");
       Navigator.pushNamed(context, 'principal');
+      
     }).catchError((e){
       switch(e.code) {
         case 'invalid-credential' : 

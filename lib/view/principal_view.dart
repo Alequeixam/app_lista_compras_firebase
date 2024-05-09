@@ -31,6 +31,7 @@ class _PrincipalViewState extends State<PrincipalView> {
               
             },
             icon: Icon(Icons.exit_to_app),
+            tooltip: 'Logout',
           )
         ],
       ),
