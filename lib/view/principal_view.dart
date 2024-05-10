@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../control/login_controller.dart';
+import '../controller/login_controller.dart';
 
 class PrincipalView extends StatefulWidget {
   const PrincipalView({super.key});

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../control/login_controller.dart';
+import '../controller/login_controller.dart';
 
 class CadastrarView extends StatefulWidget {
   const CadastrarView({super.key});
