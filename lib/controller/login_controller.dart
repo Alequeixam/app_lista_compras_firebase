@@ -72,7 +72,7 @@ class LoginController {
   // ID do Usuário Logado
   //
   idUsuario() {
-
+    return FirebaseAuth.instance.currentUser!.uid;
   }
   
 }
