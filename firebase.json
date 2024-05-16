@@ -1,1 +1,37 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"app-lista-tarefas-fatec","appId":"1:171993035466:android:3d32f2fffc29e1b0603a33","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"app-lista-tarefas-fatec","configurations":{"android":"1:171993035466:android:3d32f2fffc29e1b0603a33","ios":"1:171993035466:ios:5910be8afa0f7841603a33","web":"1:171993035466:web:67ce2e6c0e0d113d603a33"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "app-lista-tarefas-fatec",
+          "appId": "1:171993035466:android:3d32f2fffc29e1b0603a33",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "app-lista-tarefas-fatec",
+          "configurations": {
+            "android": "1:171993035466:android:3d32f2fffc29e1b0603a33",
+            "ios": "1:171993035466:ios:5910be8afa0f7841603a33",
+            "web": "1:171993035466:web:67ce2e6c0e0d113d603a33"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
