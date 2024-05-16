@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +31,6 @@ class _PrincipalViewState extends State<PrincipalView> {
               Navigator.pop(context);
             },
             icon: Icon(Icons.exit_to_app),
-            tooltip: 'Logout',
           )
         ],
       ),
@@ -40,7 +38,91 @@ class _PrincipalViewState extends State<PrincipalView> {
       // BODY
       body: Padding(
         padding: const EdgeInsets.all(20.0),
+        //
+        // LISTAR as tarefas
+        //
+        child: StreamBuilder<QuerySnapshot>(
+          //fluxo de dados
+          stream: TarefaController().listar().snapshots(),
+          //exibição dos dados
+          builder: (context, snapshot) {
+            //verificar a conectividade
+            switch (snapshot.connectionState) {
+              //sem conexão
+              case ConnectionState.none:
+                return Center(
+                  child: Text("Falha na conexão."),
+                );
+
+              //conexão lenta
+              case ConnectionState.waiting:
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+
+              //dados recuperados com sucesso
+              default:
+                final dados = snapshot.requireData;
+                if (dados.size > 0) {
+                  //exibir a lista de tarefas
+                  return ListView.builder(
+                    itemCount: dados.size,
+                    itemBuilder: (context, index) {
+                      // ID do documento
+                      String id = dados.docs[index].id;
+
+                      // DADOS armazenados no documento
+                      dynamic item = dados.docs[index].data();
+
+                      return Card(
+                        child: ListTile(
+                          title: Text(item['titulo']),
+                          subtitle: Text(item['descricao']),
+                          //
+                          // atualizar e excluir tarefas
+                          //
+                          trailing: SizedBox(
+                            width: 80,
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    
+                                    txtTitulo.text = item['titulo'];
+                                    txtDescricao.text = item['descricao'];
+                                    salvarTarefa(context, docId: id);
+
+
+                                  },
+                                  icon: Icon(Icons.edit_rounded),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+
+                                    TarefaController().excluir(context, id);
+
+                                  },
+                                  icon: Icon(Icons.delete_rounded),
+                                ),
+                                
+                              ],
+                            ),
+                          ),
+                          onTap: () {},
+                        ),
+                      );
+                    },
+                  );
+                } else {
+                  return Center(
+                    child: Text("Nenhuma tarefa encontrada."),
+                  );
+                }
+            }
+          },
+        ),
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           salvarTarefa(context);
@@ -99,13 +181,20 @@ class _PrincipalViewState extends State<PrincipalView> {
             ElevatedButton(
               child: Text("salvar"),
               onPressed: () {
+                //criação do objeto
                 var t = Tarefa(
-                  LoginController().idUsuario(), 
+                  LoginController().idUsuario(),
                   txtTitulo.text,
-                  txtDescricao.text
+                  txtDescricao.text,
                 );
 
-                TarefaController().adicionar(context, t);
+                if (docId == null) {
+                  TarefaController().adicionar(context, t);
+                }
+                else {
+                  TarefaController().atualizar(context, docId, t);
+                }
+                
                 txtTitulo.clear();
                 txtDescricao.clear();
               },
